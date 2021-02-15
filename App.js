@@ -6,109 +6,154 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, { Component, useState } from 'react';
 import {
-  SafeAreaView,
   StyleSheet,
-  ScrollView,
   View,
   Text,
-  StatusBar,
+  Image,
+  TouchableOpacity
 } from 'react-native';
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+class App extends Component {
 
-const App: () => React$Node = () => {
-  return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
+  constructor(props) {
+    super(props);
+    this.state = {
+      textoFrase: 'Aperte o botão para ter um momento de iluminação filosófica.',
+      img: require('./src/images/ovelha-close.png')
+    };
+
+    this.gerarFrase = this.gerarFrase.bind(this);
+
+    this.frases = [
+      [
+        "Fala pro cliente que ",
+        "Com este commit, ",
+        "Nesse pull request, ",
+        "Dado o fluxo de dados atual, ",
+        "Explica pro Product Onwer que ",
+        "Desde ontem a noite ",
+        "A equipe de suporte precisa saber que ",
+      ],
+      [
+        "a normalização da data ",
+        "um erro não identificado ",
+        "o gerenciador de dependências do frontend ",
+        "o módulo de recursão paralela ",
+        "a otimização de performance da renderização do DOM ",
+        "a disposição dos elementos HTML ",
+        "a compilação final do programa ",
+        "o deploy automatizado no Heroku ",
+        "o último pull request desse SCRUM ",
+      ],
+      [
+        "deletou todas as entradas ",
+        "otimizou a renderização ",
+        "causou o bug ",
+        "corrigiu o bug ",
+        "superou o desempenho ",
+        "complexificou o merge ",
+        "facilitou a resolução de conflito ",
+        "causou a race condition ",
+      ],
+      [
+        "do nosso servidor de DNS.",
+        "do polimorfismo aplicado nas classes.",
+        "do fluxo de dados de forma retroativa no server.",
+        "de estados estáticos nos componentes da UI.",
+        "do JSON compilado a partir de proto-buffers.",
+        "de uma compilação com tempo acima da media.",
+        "de uma configuração Webpack eficiente nos builds.",
+        "da execução parelela de funções em multi-threads.",
+        "de compilação multi-plataforma de forma asincrona.",
+        "da execução de requisições effcientes na API.",
+        "na estabilidade do protocolo de transferência de dados.",
+        "do carregamento de JSON delimitado por linhas.",
+        "na interpolação dinâmica de strings.",
+        "no parse retroativo do DOM.",
+        "no fechamento automático das tags.",
+        "na compilação de templates literais.",
+        "na definição de variaveis com tipos estáticos.",
+        "da renderização de floats parciais.",
+        "na organização alfanumérico dos arrays multidimensionais",
+        "dos parametros passados em funções privadas.",
+        "dos argumentos que definem um schema dinâmico.",
+        "na criação de novos polyfills para suportar os processos."
+      ]
+    ];
+  }
+
+  gerarFrase() {
+    return () => {
+      let frase = this.frases.reduce((sentence, currentPiece) => {
+        return sentence + currentPiece[Math.floor(Math.random() * currentPiece.length)]
+      }, '');
+
+      this.setState((state, props) => ({
+        textoFrase: '"' + frase + '"',
+        img: require('./src/images/ovelha-open.png')
+      }));
+    }
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
+
+        <Text style={styles.textoFrase}>{this.state.textoFrase}</Text>
+
+        <Image
+          source={this.state.img}
+          style={styles.ovelha}
+        />
+
+        <TouchableOpacity style={styles.btn} onPress={this.gerarFrase()}>
+          <View style={styles.btnView}>
+            <Text style={styles.btnText}>Gerar Frase</Text>
           </View>
-        </ScrollView>
-      </SafeAreaView>
-    </>
-  );
-};
+        </TouchableOpacity>
+      </View>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
-  engine: {
-    position: 'absolute',
-    right: 0,
+  ovelha: {
+    width: 250,
+    height: 350
   },
-  body: {
-    backgroundColor: Colors.white,
+  textoFrase: {
+    fontSize: 20,
+    color: '#dd7b22',
+    margin: 30,
+    fontStyle: 'italic',
+    textAlign: 'center'
   },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  btn: {
+    width: 230,
+    height: 50,
+    borderWidth: 2,
+    borderColor: '#dd7b22',
+    borderRadius: 25,
+    margin: 5
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
+  btnView: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
-  sectionDescription: {
-    marginTop: 8,
+  btnText: {
     fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
+    fontWeight: 'bold',
+    color: '#dd7b22'
+  }
 });
 
 export default App;
