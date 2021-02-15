@@ -1,6 +1,5 @@
 # React Native - Gerador de Lero Lero
-<img src="src/screens/TelaInicial.jpg" width="200px" height="400px">
-</img> <img src="src/screens/LeroLeroGerado.jpg" width="200px" height="400px"></img>
+<img src="src/screens/TelaInicial.jpg" width="200px" height="400px"></img> <img src="src/screens/LeroLeroGerado.jpg" width="200px" height="400px"></img>
 
 # O que você vai encontrar aqui
 Encontrará um app de geração de frases aleatórias utilizando comandos básicos do React Native.
