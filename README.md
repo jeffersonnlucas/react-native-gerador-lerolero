@@ -15,7 +15,7 @@ Encontrará um app de geração de frases aleatórias utilizando comandos básic
 ```bash
 # Inicializar um projeto
 $ git clone git@github.com:jeffersonnlucas/react-native-gerador-lerolero.git
-$ cd react-native-basic
+$ cd react-native-gerador-lerolero
 $ yarn install 
 $ yarn add react-native-eject
 $ npx react-native eject
